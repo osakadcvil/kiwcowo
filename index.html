@@ -120,6 +120,8 @@
     ];
 
     let index = 0;
+    let noClickCount = 0;
+    const maxNoClicks = 6;
 
     function jawabYes() {
       const love = document.createElement("div");
@@ -131,15 +133,15 @@
 
       setTimeout(() => love.remove(), 1000);
 
-      document.getElementById("question").innerText = "YAY!! Kita jadian sekarang!! 💕💑";
+      document.getElementById("question").innerText = "YAY!! Kita jadian sekarang!! 💕🥰";
       document.querySelector(".buttons").style.display = "none";
     }
 
     function jawabNo() {
+      noClickCount++;
       index = (index + 1) % questions.length;
       document.getElementById("question").innerText = questions[index];
 
-      // Pindahkan tombol "No" ke posisi random
       const btnNo = document.getElementById("noBtn");
       const container = document.querySelector(".buttons");
 
@@ -152,6 +154,12 @@
       btnNo.style.left = `${randX}px`;
       btnNo.style.top = `${randY}px`;
       btnNo.style.transform = `translate(0, 0)`;
+
+      // Kalau sudah klik "Nggak" terlalu banyak, ganti jadi "Iya deh 😅"
+      if (noClickCount >= maxNoClicks) {
+        btnNo.innerText = "😅 Iya deh";
+        btnNo.onclick = jawabYes;
+      }
     }
   </script>
 
