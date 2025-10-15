@@ -4,12 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>nembak cowo heheh💘</title>
+
+  <!-- Link ke Google Fonts: Comic Neue -->
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
       padding: 0;
       background-color: #fff0f5;
-      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-family: 'Comic Neue', cursive, sans-serif;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -17,6 +21,7 @@
       height: 100vh;
       overflow: hidden;
       text-align: center;
+      position: relative;
     }
 
     h1 {
@@ -84,6 +89,23 @@
       }
     }
 
+    /* Rain animation */
+    .heart-rain {
+      position: absolute;
+      top: -30px;
+      font-size: 2rem;
+      animation: fall 3s linear forwards;
+      color: #ff69b4;
+      pointer-events: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+
     @media (max-width: 600px) {
       h1 {
         font-size: 1.4rem;
@@ -124,17 +146,23 @@
     const maxNoClicks = 6;
 
     function jawabYes() {
-      const love = document.createElement("div");
-      love.className = "love";
-      love.innerHTML = "💘";
-      love.style.left = Math.random() * (window.innerWidth - 50) + "px";
-      love.style.top = Math.random() * (window.innerHeight - 50) + "px";
-      document.body.appendChild(love);
-
-      setTimeout(() => love.remove(), 1000);
-
       document.getElementById("question").innerText = "YAY!! Kita jadian sekarang!! 💕🥰";
       document.querySelector(".buttons").style.display = "none";
+
+      // Buat love rain animation
+      for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart-rain";
+          heart.innerText = "❤️";
+          heart.style.left = Math.random() * 100 + "vw";
+          heart.style.fontSize = (Math.random() * 20 + 20) + "px";
+          document.body.appendChild(heart);
+
+          // Hapus setelah jatuh
+          setTimeout(() => heart.remove(), 3000);
+        }, i * 100);
+      }
     }
 
     function jawabNo() {
@@ -155,7 +183,6 @@
       btnNo.style.top = `${randY}px`;
       btnNo.style.transform = `translate(0, 0)`;
 
-      // Kalau sudah klik "Nggak" terlalu banyak, ganti jadi "Iya deh 😅"
       if (noClickCount >= maxNoClicks) {
         btnNo.innerText = "😅 Iya deh";
         btnNo.onclick = jawabYes;
