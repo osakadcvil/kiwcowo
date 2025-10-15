@@ -3,97 +3,117 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Nembak Cowok Interaktif 💘</title>
+  <title>nembak cowo heheh💘</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background: #fff0f5;
+      padding: 0;
+      background-color: #fff0f5;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
       overflow: hidden;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
       color: #ff69b4;
-      font-size: 24px;
+      font-size: 1.8rem;
       margin: 20px;
+      padding: 0 10px;
     }
 
     .buttons {
       position: relative;
-      display: flex;
-      gap: 20px;
+      width: 100%;
+      max-width: 300px;
+      height: 200px;
+      margin-top: 10px;
     }
 
     button {
       padding: 12px 24px;
-      font-size: 18px;
+      font-size: 1rem;
       border: none;
-      border-radius: 25px;
+      border-radius: 30px;
       cursor: pointer;
       transition: 0.2s ease;
+      position: absolute;
     }
 
     .yes {
       background-color: #ff69b4;
       color: white;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 30px;
       box-shadow: 0 4px #d94f9c;
     }
 
     .yes:active {
-      transform: translateY(2px);
+      transform: translate(-50%, 2px);
       box-shadow: 0 2px #d94f9c;
     }
 
     .no {
       background-color: #ffe4e1;
       color: #ff1493;
-      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
     }
 
     .love {
-      font-size: 40px;
       position: absolute;
-      animation: loveUp 1s ease-out forwards;
+      font-size: 2.5rem;
+      animation: flyUp 1s ease-out forwards;
       pointer-events: none;
     }
 
-    @keyframes loveUp {
+    @keyframes flyUp {
       0% {
         transform: translateY(0);
         opacity: 1;
       }
       100% {
-        transform: translateY(-200px);
+        transform: translateY(-150px);
         opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+      }
+
+      .love {
+        font-size: 2rem;
       }
     }
   </style>
 </head>
 <body>
+
   <h1 id="question">Mau nggak jadi pacarku? 🥺👉👈</h1>
+
   <div class="buttons">
     <button class="yes" onclick="jawabYes()">💖 Iya</button>
-    <button class="no" onclick="jawabNo()" id="noButton">🙅‍♂️ Nggak</button>
+    <button class="no" id="noBtn" onclick="jawabNo()">🙅‍♂️ Nggak</button>
   </div>
 
   <script>
-    const pertanyaan = [
+    const questions = [
       "Yakin nggak mau jadi pacarku? 😭",
-      "Kalau aku kasih boba, mau gak? 🧋💗",
-      "Kalau aku janji setia selamanya? 💍",
-      "Kalau aku tiap hari chat 'udah makan belum?' 😳",
-      "Kalau aku nyanyi lagu favoritmu? 🎶",
-      "Yaudah temenan aja tapi aku suka kamu 😢",
-      "Kalau aku jadi waifu kamu? 😽",
-      "Tolong dong, iya sekali aja 😭🙏",
-      "Klik Iya dong, kasihan aku nunggu 😭",
-      "Oke deh aku nyerah... eh enggak ding 😆",
+      "Kalau aku jajanin boba? 🥺",
+      "
     ];
 
     let index = 0;
@@ -102,27 +122,35 @@
       const love = document.createElement("div");
       love.className = "love";
       love.innerHTML = "💘";
-      love.style.left = Math.random() * window.innerWidth + "px";
-      love.style.top = Math.random() * window.innerHeight + "px";
+      love.style.left = Math.random() * (window.innerWidth - 50) + "px";
+      love.style.top = Math.random() * (window.innerHeight - 50) + "px";
       document.body.appendChild(love);
 
       setTimeout(() => love.remove(), 1000);
 
-      document.getElementById("question").innerText = "YAY! Sekarang kita jadian! 😍💞";
+      document.getElementById("question").innerText = "YAY!! Kita jadian sekarang!! 💕💑";
       document.querySelector(".buttons").style.display = "none";
     }
 
     function jawabNo() {
-      index = (index + 1) % pertanyaan.length;
-      document.getElementById("question").innerText = pertanyaan[index];
+      index = (index + 1) % questions.length;
+      document.getElementById("question").innerText = questions[index];
 
-      // Kabur ke posisi acak
-      const btnNo = document.getElementById("noButton");
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 100);
-      btnNo.style.left = x + "px";
-      btnNo.style.top = y + "px";
+      // Pindahkan tombol "No" ke posisi random
+      const btnNo = document.getElementById("noBtn");
+      const container = document.querySelector(".buttons");
+
+      const maxX = container.clientWidth - btnNo.offsetWidth;
+      const maxY = container.clientHeight - btnNo.offsetHeight;
+
+      const randX = Math.random() * maxX;
+      const randY = Math.random() * maxY;
+
+      btnNo.style.left = `${randX}px`;
+      btnNo.style.top = `${randY}px`;
+      btnNo.style.transform = `translate(0, 0)`;
     }
   </script>
+
 </body>
 </html>
